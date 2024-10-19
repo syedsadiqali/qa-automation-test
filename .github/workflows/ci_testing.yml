@@ -1,11 +1,11 @@
 name: Java Test Automation Framework for CI with Maven
 
 on:
-  #Trigger this workflow on pull requests
   pull_request:
     branches:
-      - main  # Replace with your main branch name if different
-
+      - main
+  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: windows-latest
@@ -31,9 +31,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
- # Step 3: Navigate to the directory containing pom.xml
-    - name: Change directory to project root
-      run: cd TestAutomation
+      # Change directory (if pom.xml is not in the root directory)
+    - name: Change to project directory
+      working-directory: TestAutomation/TestAutomationFramework  # Update this to the correct folder
       
     # Step 5: Install project dependencies and build the project
     - name: Build with Maven
