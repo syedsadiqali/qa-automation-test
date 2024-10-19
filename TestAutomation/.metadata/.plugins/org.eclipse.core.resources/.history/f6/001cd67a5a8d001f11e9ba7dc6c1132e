@@ -1,0 +1,17 @@
+package utilities;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class ExcelUtilities {
+
+	  private Workbook workbook;
+	  private Sheet sheet;
+	    
+	public ExcelUtilities(String excelFilePath, String sheetName) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(new File(excelFilePath));
+        workbook = WorkbookFactory.create(fileInputStream);
+        sheet = workbook.getSheet(sheetName);
+        fileInputStream.close();
+    }
+}

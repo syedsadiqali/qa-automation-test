@@ -1,0 +1,17 @@
+package utilities;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class ReportUtilities {
+
+	static ExtentTest extentTest;
+	
+	public void StartTest(String testName) {
+		ExtentReports extent = new ExtentReports();
+		ExtentSparkReporter spark = new ExtentSparkReporter("C:\\Eclipse-JavaProjects\\TestAutomationFramework\\Reports\\report.html");
+		spark.config().setDocumentTitle("Sanity Test Report");
+		extentTest = extent.createTest(testName).assignAuthor("Sakshi").assignCategory("Sanity Test");
+	}
+}

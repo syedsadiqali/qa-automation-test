@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-10-19T16:02:56 MESZ" name="CustomerDashboardSuite" finished-at="2024-10-19T16:03:06 MESZ" duration-ms="10489">
+    <groups>
+    </groups>
+    <test started-at="2024-10-19T16:02:56 MESZ" name="CustomerDashboardTest" finished-at="2024-10-19T16:03:06 MESZ" duration-ms="10489">
+      <class name="test_scenarios.TestMethods">
+        <test-method is-config="true" signature="beforeTest()[pri:0, instance:test_scenarios.TestMethods@783a467b]" started-at="2024-10-19T16:02:56 MESZ" name="beforeTest" finished-at="2024-10-19T16:02:59 MESZ" duration-ms="3803" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method signature="VerifyAppointmentDataOnCustomerDashboard()[pri:0, instance:test_scenarios.TestMethods@783a467b]" started-at="2024-10-19T16:03:00 MESZ" name="VerifyAppointmentDataOnCustomerDashboard" finished-at="2024-10-19T16:03:01 MESZ" duration-ms="1163" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- VerifyAppointmentDataOnCustomerDashboard -->
+        <test-method signature="VerifyRescheduledAppointmentDataOnCustomerDashboard()[pri:0, instance:test_scenarios.TestMethods@783a467b]" started-at="2024-10-19T16:03:01 MESZ" name="VerifyRescheduledAppointmentDataOnCustomerDashboard" finished-at="2024-10-19T16:03:05 MESZ" duration-ms="4777" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- VerifyRescheduledAppointmentDataOnCustomerDashboard -->
+        <test-method is-config="true" signature="afterTest()[pri:0, instance:test_scenarios.TestMethods@783a467b]" started-at="2024-10-19T16:03:05 MESZ" name="afterTest" finished-at="2024-10-19T16:03:06 MESZ" duration-ms="717" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+      </class> <!-- test_scenarios.TestMethods -->
+    </test> <!-- CustomerDashboardTest -->
+  </suite> <!-- CustomerDashboardSuite -->
+</testng-results>

@@ -1,0 +1,11 @@
+package objects;
+
+import org.openqa.selenium.By;
+
+public class Elements {
+
+	public static By userName = By.xpath("//input[@id='email']");
+	By pwd = By.xpath("//input[@id='pass']");
+	By loginBtn = By.xpath("//button[@name='login']");
+	
+}

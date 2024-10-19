@@ -1,0 +1,103 @@
+package test_scenarios;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.time.Duration;
+
+import org.apache.commons.io.FileUtils;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+import functions.AppointmentPortalFunctions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import utilities.ReportUtilities;
+
+public class TestMethods {
+
+	WebDriver driver;
+	static ExtentTest extentTest;
+	ExtentReports extent = new ExtentReports();
+	ExtentSparkReporter spark = new ExtentSparkReporter("C:\\Eclipse-JavaProjects\\TestAutomationFramework\\Reports\\report.html");
+	
+	@BeforeTest
+	public void beforeTest() throws InterruptedException {
+		spark.config().setDocumentTitle("Sanity Test Report");
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();		
+		extent.attachReporter(spark);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+	}
+	
+	@Test
+	public void VerifyAppointmentDataOnCustomerDashboard() throws IOException{
+		try {
+			reports.StartTest("Verify Appointment Data");
+			//extentTest = extent.createTest("Verify Appointment Data").assignAuthor("Sakshi").assignCategory("Sanity Test");				
+			appointment.VerifyAppointmentData();
+			
+			AddScreenshotForPassOrFailStatus("Pass", "Complete appointment data is available on the screen");
+		}
+		catch(Exception message) {
+			AddScreenshotForPassOrFailStatus("Fail", "Complete appointment data is not available on the screen");
+		}		
+	}
+	
+	@Test
+	public void VerifyRescheduledAppointmentDataOnCustomerDashboard() throws IOException{
+		try {
+			AppointmentPortalFunctions appointment = new AppointmentPortalFunctions(driver);
+			reports.StartTest("Verify Rescheduled Appointment Data");
+			//extentTest = extent.createTest("Verify Rescheduled Appointment Data").assignAuthor("Sakshi").assignCategory("Sanity Test");
+			
+					
+			appointment.VerifyRescheduledAppointmentData();
+			
+			AddScreenshotForPassOrFailStatus("Pass", "Complete data of rescheduled appointment is available on the screen");
+		}
+		catch(Exception message) {
+			AddScreenshotForPassOrFailStatus("Fail", "Complete data of rescheduled appointment is not available on the screen");
+		}		
+	}
+
+	public static String CaptureScreenshot(WebDriver driver) throws IOException {
+		File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File destinationFilePath = new File("src/../Images/screenshot"+System.currentTimeMillis()+".png");
+		
+		String absoluteFilePath = destinationFilePath.getAbsolutePath();
+		FileUtils.copyFile(srcFile, destinationFilePath);
+		
+		return absoluteFilePath;
+	}
+	
+	public void AddScreenshotForPassOrFailStatus(String status, String message) throws IOException {
+		extentTest.addScreenCaptureFromPath(CaptureScreenshot(driver));
+		if(status.equals("Pass")) {
+			extentTest.log(Status.PASS, message);
+			extentTest.pass("Customer's appointment data verified successfully.");
+		}
+		else {
+			extentTest.log(Status.FAIL, message);
+			extentTest.fail("Complete appointment Data is not available on the customer dashboard.");
+		}		
+	}
+		
+	@AfterTest
+	public void afterTest() {
+		driver.quit();
+		extent.flush();
+	}	
+}

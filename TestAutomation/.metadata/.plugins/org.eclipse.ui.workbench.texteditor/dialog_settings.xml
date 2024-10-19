@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="public void StartTest(String testName) {"/>
+		<list key="findhistory">
+			<item value="public void StartTest(String testName) {"/>
+			<item value="&lt;dependencyManagement&gt;"/>
+			<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;"/>
+		</list>
+	</section>
+</section>

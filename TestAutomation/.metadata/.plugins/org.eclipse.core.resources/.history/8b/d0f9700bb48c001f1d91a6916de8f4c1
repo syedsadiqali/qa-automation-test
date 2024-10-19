@@ -1,0 +1,12 @@
+package objects;
+
+import org.openqa.selenium.By;
+
+public class Elements {
+
+	public static By aufgabe = By.xpath("//input[@id='email']");
+	public static By tag = By.xpath("//input[@id='pass']");
+	public static By startzeit = By.xpath("//button[@name='login']");
+	public static By endzeit = By.xpath("//button[@name='login']");
+	
+}
