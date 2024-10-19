@@ -31,6 +31,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
+# Change directory (if pom.xml is not in the root directory)
+    - name: Change to project directory
+      working-directory: TestAutomation/TestAutomationFramework  # Update this to the correct folder
+
     # Step 4: Install project dependencies and build the project
     - name: Build with Maven
       run: mvn clean install -DskipTests
