@@ -37,4 +37,4 @@ jobs:
 
     # Step 5: Run the tests
     - name: Run Selenium tests
-      run: mvn test
+      run: mvn -f TestAutomation/TestAutomationFramework/pom.xml test
