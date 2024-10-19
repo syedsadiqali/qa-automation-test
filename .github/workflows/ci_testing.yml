@@ -1,10 +1,11 @@
 name: Java Test Automation Framework for CI with Maven
 
 on:
+  #Trigger this workflow on pull requests
   pull_request:
     branches:
-      - main
-  
+      - main  # Replace with your main branch name if different
+
 jobs:
   build:
     runs-on: windows-latest
@@ -18,10 +19,10 @@ jobs:
     - name: Set up JDK 23
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
-        java-version: '23'
+         distribution: 'temurin'
+         java-version: '23'
 
-    # Step 4: Cache Maven dependencies to speed up the build
+    # Step 3: Cache Maven dependencies to speed up the build
     - name: Cache Maven dependencies
       uses: actions/cache@v3
       with:
@@ -30,14 +31,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-      # Change directory (if pom.xml is not in the root directory)
-    - name: Change to project directory
-      working-directory: TestAutomation/TestAutomationFramework  # Update this to the correct folder
-      
-    # Step 5: Install project dependencies and build the project
+    # Step 4: Install project dependencies and build the project
     - name: Build with Maven
       run: mvn clean install -DskipTests
 
-    # Step 6: Run the tests
+    # Step 5: Run the tests
     - name: Run Selenium tests
       run: mvn test
