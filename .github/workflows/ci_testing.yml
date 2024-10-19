@@ -24,7 +24,7 @@ jobs:
 
     # Step 3: Navigate to the directory containing pom.xml
     - name: Change directory to project root
-      run: cd TestAutomation/TestAutomationFramework
+      run: cd TestAutomation
 
     # Step 4: Cache Maven dependencies to speed up the build
     - name: Cache Maven dependencies
