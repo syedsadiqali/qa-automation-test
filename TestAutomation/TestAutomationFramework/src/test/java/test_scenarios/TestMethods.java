@@ -30,6 +30,7 @@ public class TestMethods {
 		options.addArguments("--headless");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-dev-shm-usage");
+		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();				
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 		driver.get(URL);
