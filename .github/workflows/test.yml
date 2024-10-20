@@ -1,0 +1,50 @@
+name: Manual Test Run
+
+on:
+  workflow_dispatch:  # Allows the workflow to be triggered manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the latest code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify the Node.js version you need
+
+    # Step 3: Install project dependencies
+    - name: Install Dependencies
+      run: npm install
+
+    # Step 4: Set up and start the client and server
+    - name: Start Client and Server
+      run: |
+        npm run setup
+        npm run start &
+        echo "Server and client starting..."
+
+    # Step 5: Wait for Server to be Ready
+    - name: Wait for Server to be Ready
+      run: |
+        count=0
+        until curl --silent --fail http://localhost:8080; do
+          ((count++))
+          if [ $count -ge 60 ]; then  # Increased attempts
+            echo "Server did not start in time."
+            exit 1
+          fi
+          echo "Waiting for server... attempt $count"
+          sleep 5
+        done
+        echo "Server is up!"
+
+    # Step 6: Run Tests
+    - name: Run Tests
+      run: npm test  # Replace with your test command
+
