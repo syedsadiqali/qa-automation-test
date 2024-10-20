@@ -22,7 +22,13 @@ jobs:
          distribution: 'temurin'
          java-version: '23'
 
-    # Step 3: Cache Maven dependencies to speed up the build
+    # Step 3: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify the Node.js version you need
+
+    # Step 4: Cache Maven dependencies to speed up the build
     - name: Cache Maven dependencies
       uses: actions/cache@v3
       with:
@@ -31,17 +37,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # Step 4: Install project dependencies and build the project
+    # Step 5: Install project dependencies and build the project
     - name: Build with Maven
       run: mvn -f TestAutomation/TestAutomationFramework/pom.xml clean install -DskipTests 
 
-    # Step 5: Set up and start the client and server
+    # Step 6: Set up and start the client and server
     - name: Start Client and Server
       run: |
         npm run setup
         npm run start &
 
-    # Step 6: Check if the server is up
+    # Step 7: Check if the server is up
     - name: Wait for Server to be Ready
       run: |
         for i in {1..30}; do
@@ -53,6 +59,6 @@ jobs:
           sleep 5
         done
 
-    # Step 7: Run the tests
+    # Step 8: Run the tests
     - name: Run Selenium tests
       run: mvn -f TestAutomation/TestAutomationFramework/pom.xml test
