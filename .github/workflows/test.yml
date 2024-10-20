@@ -8,6 +8,26 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Check Internet Connectivity
+      shell: pwsh
+      run: |
+        $count = 0
+        while ($count -lt 60) {
+          try {
+            Invoke-RestMethod -Uri https://www.google.com -UseBasicParsing
+            Write-Host "Internet connectivity is available!"
+            break
+          } catch {
+            $count++
+            Write-Host "Waiting for internet connectivity... attempt $count"
+            Start-Sleep -Seconds 5
+          }
+        }
+        if ($count -ge 60) {
+          Write-Host "Internet connectivity could not be established in time."
+          exit 1
+        }
+        
     # Step 1: Checkout the latest code from the repository
     - name: Checkout code
       uses: actions/checkout@v3
@@ -31,25 +51,25 @@ jobs:
 
     # Step 5: Wait for Server to be Ready
     - name: Wait for Server to be Ready
-      shell: cmd
+      shell: pwsh
       run: |
-        set count=0
-        :wait_loop
-        curl --silent --fail http://localhost:8080
-        if %errorlevel%==0 (
-          echo Server is up!
-        ) else (
-          set /a count+=1
-          if %count% geq 60 (
-            echo Server did not start in time.
-            exit /b 1
-          )
-          echo Waiting for server... attempt %count%
-          timeout /t 5 >nul
-          goto wait_loop
-        )
+        $count = 0
+        while ($count -lt 60) {
+          try {
+            Invoke-RestMethod -Uri http://localhost:8080 -UseBasicParsing
+            Write-Host "Server is up!"
+            break
+          } catch {
+            $count++
+            Write-Host "Waiting for server... attempt $count"
+            Start-Sleep -Seconds 5
+          }
+        }
+        if ($count -ge 60) {
+          Write-Host "Server did not start in time."
+          exit 1
+        }
 
     # Step 6: Run Tests
     - name: Run Tests
       run: npm test  # Replace with your test command
-
