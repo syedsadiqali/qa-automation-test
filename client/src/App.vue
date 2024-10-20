@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
 import AppointmentList from "@/components/AppointmentList.vue";
 
 export default {
