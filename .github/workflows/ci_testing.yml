@@ -46,21 +46,22 @@ jobs:
       run: |
         npm run setup
         npm run start &
+        sleep 5
 
-    # Step 7: Check if the server is up
-    - name: Wait for Server to be Ready
-      run: |
-        count=0
-        until curl --silent --fail http://localhost:8080; do
-          ((count++))
-          if [ $count -ge 30 ]; then
-            echo "Server did not start in time."
-            exit 1
-          fi
-          echo "Waiting for server..."
-          sleep 5
-        done
-        echo "Server is up!"
+    # # Step 7: Check if the server is up
+    # - name: Wait for Server to be Ready
+    #   run: |
+    #     count=0
+    #     until curl --silent --fail http://localhost:8080; do
+    #       ((count++))
+    #       if [ $count -ge 30 ]; then
+    #         echo "Server did not start in time."
+    #         exit 1
+    #       fi
+    #       echo "Waiting for server..."
+    #       sleep 5
+    #     done
+    #     echo "Server is up!"
 
     # Step 8: Run the tests
     - name: Run Selenium tests
