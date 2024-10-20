@@ -35,6 +35,24 @@ jobs:
     - name: Build with Maven
       run: mvn -f TestAutomation/TestAutomationFramework/pom.xml clean install -DskipTests 
 
-    # Step 5: Run the tests
+    # Step 5: Set up and start the client and server
+    - name: Start Client and Server
+      run: |
+        npm run setup
+        npm run start &
+
+    # Step 6: Check if the server is up
+    - name: Wait for Server to be Ready
+      run: |
+        for i in {1..30}; do
+          if curl --silent --fail http://localhost:8080; then
+            echo "Server is up!"
+            break
+          fi
+          echo "Waiting for server..."
+          sleep 5
+        done
+
+    # Step 7: Run the tests
     - name: Run Selenium tests
       run: mvn -f TestAutomation/TestAutomationFramework/pom.xml test
