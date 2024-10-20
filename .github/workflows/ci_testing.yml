@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest  # Change to Ubuntu
 
     steps:
     # Step 1: Checkout the latest code from the repository
@@ -43,7 +43,7 @@ jobs:
     - name: Build with Maven
       run: mvn -f TestAutomation/TestAutomationFramework/pom.xml clean install -DskipTests 
 
-    # Step 6 Set up and start the client and server
+    # Step 6: Set up and start the client and server
     - name: Start Client and Server
       run: |
         npm run setup
