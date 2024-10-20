@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Change to Ubuntu
+    runs-on: windows-latest  # Change to Ubuntu
 
     steps:
     # Step 1: Checkout the latest code from the repository
@@ -52,18 +52,23 @@ jobs:
 
     # Step 7: Wait for Server to be Ready
     - name: Wait for Server to be Ready
+      shell: cmd
       run: |
-        count=0
-        until curl --silent --fail http://localhost:8080; do
-          ((count++))
-          if [ $count -ge 60 ]; then  # Increased attempts
-            echo "Server did not start in time."
-            exit 1
-          fi
-          echo "Waiting for server... attempt $count"
-          sleep 5
-        done
-        echo "Server is up!"
+        set count=0
+        :wait_loop
+        curl --silent --fail http://localhost:8080 >nul 2>nul
+        if %errorlevel%==0 (
+          echo Server is up!
+        ) else (
+          set /a count+=1
+          if %count% geq 60 (
+            echo Server did not start in time.
+            exit /b 1
+          )
+          echo Waiting for server... attempt %count%
+          timeout /t 5 >nul
+          goto wait_loop
+        )
 
     # Step 8: Run the tests
     - name: Run Selenium tests
