@@ -6,7 +6,7 @@ import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -26,7 +26,10 @@ public class TestMethods {
 	@BeforeTest
 	public void beforeTest() throws InterruptedException {
 		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless");
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
 		driver.manage().window().maximize();				
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 		driver.get(URL);
