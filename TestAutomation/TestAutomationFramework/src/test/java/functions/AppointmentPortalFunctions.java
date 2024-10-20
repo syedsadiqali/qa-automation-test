@@ -18,7 +18,7 @@ public class AppointmentPortalFunctions {
 	//Variable declaration
 	
 	WebDriver driver;
-	String dataFilePath = new File("TestData\\TerminTestData.xlsx").getAbsolutePath();
+	String dataFilePath = new File("TestData" + File.separator + "TerminTestData.xlsx").getAbsolutePath();
 	String sheetName = "TerminDetails";
 	
 	String actualAufgabe;
