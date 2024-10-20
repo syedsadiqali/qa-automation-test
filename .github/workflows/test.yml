@@ -8,13 +8,34 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    # Step 1: Checkout the latest code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify the Node.js version you need
+
+    # Step 3: Install project dependencies
+    - name: Install Dependencies
+      run: npm install
+
+    # Step 4: Set up and start the client and server
+    - name: Start Client and Server
+      run: |
+        npm run setup
+        npm run start &
+        echo "Server and client starting..."
+
     # Step 5: Wait for Server to be Ready
     - name: Wait for Server to be Ready
       shell: cmd
       run: |
         set count=0
         :wait_loop
-        curl --silent --fail http://localhost:8080 >nul 2>nul
+        curl --silent --fail http://localhost:8080
         if %errorlevel%==0 (
           echo Server is up!
         ) else (

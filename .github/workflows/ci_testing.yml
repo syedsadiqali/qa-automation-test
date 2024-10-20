@@ -56,7 +56,7 @@ jobs:
       run: |
         set count=0
         :wait_loop
-        curl --silent --fail http://localhost:8080 >nul 2>nul
+        curl --silent --fail http://localhost:8080
         if %errorlevel%==0 (
           echo Server is up!
         ) else (
