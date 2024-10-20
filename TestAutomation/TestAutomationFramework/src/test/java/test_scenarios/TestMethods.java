@@ -21,6 +21,7 @@ public class TestMethods {
 
 	WebDriver driver;	
 	ReportUtilities reports = new ReportUtilities(driver);
+	//This is application URL
 	String URL="http://localhost:8080/";
 	
 	@BeforeTest
